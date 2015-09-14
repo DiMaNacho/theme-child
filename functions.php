@@ -5,14 +5,16 @@ function mis_files() {
 	// Agregar hojas de estilos del parent.
 	wp_enqueue_style(
 		'parent-style', 
-		get_template_directory_uri() . '/style.css'
+		get_template_directory_uri() . '/style.css',
+		array()
 	);
 
 	// Hoja de estilos custom (archivo le-css.css)
+	// con la dependecia de "parent-style"
 	wp_enqueue_style( 
 		'le-css',
 		get_stylesheet_directory_uri() .'/le-css.css',
-		array()
+		array('parent-style')
 	);
 
 	// JS custom (archivo le-script.js)
@@ -23,9 +25,12 @@ function mis_files() {
 	);
 }
 
-add_action( 'wp_enqueue_scripts', 'mis_files' );
+// En vez de usar "wp_enqueue_scripts" usamos el "wp_print_styles" para forzar 
+// a que cargue estos CSS al final y tengan más prioridad que los del Parent theme.
+add_action( 'wp_print_styles', 'mis_files' );
 
-// Un custom excerpt donde cuenta letras máximas, le pone puntos suspensivos y si querés mostrás un red more.
+// Un custom excerpt donde cuenta letras máximas, 
+// le pone puntos suspensivos y si querés mostrás un red more.
 function get_excerpt($count, $more = false){
 	$permalink = get_permalink($post->ID);
 	$excerpt = get_the_content();
@@ -39,5 +44,5 @@ function get_excerpt($count, $more = false){
 if ( function_exists( 'add_theme_support' ) ) { 
 	add_theme_support( 'post-thumbnails' );
 
-	add_image_size( 'woo-products', 300, 300, true ); //300 pixels wide (and unlimited height)
+	add_image_size( 'woo-products', 300, 300, true );
 }
