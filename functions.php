@@ -2,12 +2,20 @@
 
 // Usar mis propios files del child (JS y CSS)
 function mis_files() {
+	// Agregar hojas de estilos del parent.
+	wp_enqueue_style(
+		'parent-style', 
+		get_template_directory_uri() . '/style.css'
+	);
+
+	// Hoja de estilos custom (archivo le-css.css)
 	wp_enqueue_style( 
 		'le-css',
 		get_stylesheet_directory_uri() .'/le-css.css',
 		array()
 	);
 
+	// JS custom (archivo le-script.js)
 	wp_enqueue_script(
 		'custom-script',
 		get_stylesheet_directory_uri() .'/le-script.js',
