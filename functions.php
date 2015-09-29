@@ -44,5 +44,12 @@ function get_excerpt($count, $more = false){
 if ( function_exists( 'add_theme_support' ) ) { 
 	add_theme_support( 'post-thumbnails' );
 
-	add_image_size( 'woo-products', 300, 300, true );
+	add_image_size( 'custom-image', 450, 140);
+}
+
+add_filter( 'image_size_names_choose', 'mis_thumbs' );
+function mis_thumbs( $sizes ) {
+	return array_merge( $sizes, array(
+		'custom-image' => __( 'Custom: Imagen :D' )
+	) );
 }
